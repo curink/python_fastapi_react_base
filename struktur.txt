@@ -1,0 +1,58 @@
+python_fastapi_react_base/
+├── app/
+│   ├── api/
+│   │   ├── __init__.py
+│   │   ├── auth.py
+│   │   └── user.py
+│   ├── core/
+│   │   ├── __init__.py
+│   │   ├── config.py
+│   │   ├── database.py
+│   │   └── security.py
+│   ├── crud/
+│   │   ├── __init__.py
+│   │   └── user.py
+│   ├── frontend/
+│   │   ├── src/
+│   │   │   ├── api
+│   │   │   │   └── axios.js
+│   │   │   ├── components
+│   │   │   │   ├── Card.jsx
+│   │   │   │   ├── ErrorBoundary.jsx
+│   │   │   │   ├── Header.jsx
+│   │   │   │   ├── ProtectedRoute.jsx
+│   │   │   │   ├── Sidebar.jsx
+│   │   │   │   ├── Spinner.jsx
+│   │   │   │   └── UserForm.jsx
+│   │   │   ├── contexts
+│   │   │   │   └── AuthContext.jsx
+│   │   │   ├── layouts
+│   │   │   │   ├── AuthLayout.jsx
+│   │   │   │   └── MainLayout.jsx
+│   │   │   ├── pages
+│   │   │   │   ├── Dashboard.jsx
+│   │   │   │   ├── Login.jsx
+│   │   │   │   ├── NotFound.jsx
+│   │   │   │   └── Users.jsx
+│   │   │   └── index.css
+│   │   ├── App.jsx
+│   │   ├── index.htmn
+│   │   ├── main.jsx
+│   │   ├── package.json
+│   │   ├── postcss.config.js
+│   │   ├── tailwind.config.js
+│   │   └── vite.config.js
+│   ├── models/
+│   │   ├── __init__.py
+│   │   └── user.py
+│   ├── schemas
+│   │   ├── __init__.py
+│   │   ├── token.py
+│   │   └── user.py
+│   ├── __init__.py
+│   ├── auth.py
+│   └── main.py
+├── .env.example
+├── requirements.txt
+├── seed_admin.py
+└── README.md
