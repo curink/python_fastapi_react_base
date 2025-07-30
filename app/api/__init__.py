@@ -1,7 +1,8 @@
 # /app/api/__init__.py
 
-import os
 import importlib
+import os
+
 from fastapi import APIRouter
 
 router = APIRouter()

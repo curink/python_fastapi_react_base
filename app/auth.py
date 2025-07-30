@@ -7,8 +7,8 @@ from sqlalchemy.orm import Session
 
 from app.core.config import settings
 from app.core.database import SessionLocal
-from app.models.user import User
 from app.crud.user import get_user_by_id  # ganti ke ambil berdasarkan ID
+from app.models.user import User
 
 oauth2_scheme = OAuth2PasswordBearer(tokenUrl="api/login")
 
@@ -30,7 +30,9 @@ def get_current_user(
         detail="Invalid token",
     )
     try:
-        payload = jwt.decode(token, settings.SECRET_KEY, algorithms=[settings.ALGORITHM])
+        payload = jwt.decode(
+            token, settings.SECRET_KEY, algorithms=[settings.ALGORITHM]
+        )
         user_id: str = payload.get("sub")
         if user_id is None:
             raise credentials_exception

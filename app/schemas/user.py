@@ -1,7 +1,8 @@
 # /app/schemas/user.py
 
-from pydantic import BaseModel, EmailStr
 from typing import Optional
+
+from pydantic import BaseModel, EmailStr
 
 
 class UserBase(BaseModel):

@@ -2,6 +2,7 @@
 
 from pydantic_settings import BaseSettings
 
+
 class Settings(BaseSettings):
     APP_NAME: str = "Base API"
     DATABASE_URL: str = "sqlite:///./app.db"
@@ -16,5 +17,6 @@ class Settings(BaseSettings):
     @property
     def is_production(self) -> bool:
         return self.APP_ENV.lower() == "production"
+
 
 settings = Settings()

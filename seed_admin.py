@@ -2,6 +2,7 @@ from app.core.database import SessionLocal
 from app.core.security import hash_password
 from app.models.user import User
 
+
 def create_admin_user():
     db = SessionLocal()
     try:
@@ -10,9 +11,11 @@ def create_admin_user():
         password = "admin123"
         role = "admin"
 
-        existing = db.query(User).filter(
-            (User.username == username) | (User.email == email)
-        ).first()
+        existing = (
+            db.query(User)
+            .filter((User.username == username) | (User.email == email))
+            .first()
+        )
 
         if existing:
             print("ℹ️ Admin user already exists.")
@@ -29,6 +32,7 @@ def create_admin_user():
         print("✅ Admin user created successfully.")
     finally:
         db.close()
+
 
 if __name__ == "__main__":
     create_admin_user()

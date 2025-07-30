@@ -1,15 +1,22 @@
 # /app/api/auth.py
 
-from fastapi import APIRouter, HTTPException, Depends, Response, Request
-from sqlalchemy.orm import Session
+from fastapi import APIRouter, Depends, HTTPException, Request, Response
 from fastapi.security import OAuth2PasswordRequestForm
-from app.crud.user import get_user_by_username_or_email, get_user_by_id
-from app.core.security import verify_password, create_access_token, create_refresh_token, verify_refresh_token
-from app.core.database import SessionLocal
-from app.models.user import User
+from sqlalchemy.orm import Session
+
 from app.auth import get_current_user
+from app.core.database import SessionLocal
+from app.core.security import (
+    create_access_token,
+    create_refresh_token,
+    verify_password,
+    verify_refresh_token,
+)
+from app.crud.user import get_user_by_id, get_user_by_username_or_email
+from app.models.user import User
 
 router = APIRouter(tags=["Api Auth"])
+
 
 def get_db():
     db = SessionLocal()
@@ -23,7 +30,7 @@ def get_db():
 def login(
     response: Response,
     form: OAuth2PasswordRequestForm = Depends(),
-    db: Session = Depends(get_db)
+    db: Session = Depends(get_db),
 ):
     user = get_user_by_username_or_email(db, form.username)
     if not user or not verify_password(form.password, user.hashed_password):
@@ -38,11 +45,12 @@ def login(
         value=refresh_token,
         httponly=True,
         samesite="lax",
-        max_age=7 * 24 * 60 * 60  # 7 hari
+        max_age=7 * 24 * 60 * 60,  # 7 hari
     )
 
     return {"access_token": access_token, "token_type": "bearer"}
-    
+
+
 @router.post("/refresh-token")
 def refresh_token(request: Request, db: Session = Depends(get_db)):
     token = request.cookies.get("refresh_token")
@@ -60,11 +68,12 @@ def refresh_token(request: Request, db: Session = Depends(get_db)):
     access_token = create_access_token(data={"sub": str(user.id)})
     return {"access_token": access_token}
 
+
 @router.get("/me")
 def get_me(current_user: User = Depends(get_current_user)):
     return {
         "id": current_user.id,
         "username": current_user.username,
         "email": current_user.email,
-        "role": current_user.role
+        "role": current_user.role,
     }
