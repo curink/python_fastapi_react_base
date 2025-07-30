@@ -35,16 +35,6 @@ app.add_middleware(
 # ✅ Router API
 app.include_router(api_router, prefix="/api")
 
-# ✅ Me endpoint
-@app.get("/api/me")
-def get_me(current_user: User = Depends(get_current_user)):
-    return {
-        "id": current_user.id,
-        "username": current_user.username,
-        "email": current_user.email,
-        "role": current_user.role
-    }
-
 # ✅ Static files untuk assets React
 app.mount("/assets", StaticFiles(directory="app/frontend/dist/assets"), name="assets")
 

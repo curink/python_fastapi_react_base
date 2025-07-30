@@ -3,11 +3,13 @@
 cara install
 ```bash
 cd python_fastapi_react_base
+pip install -r  requirements.txt
+uvicorn app.main:app --reload
 ```
 
 install frontend
 ```base
-cd frontend
+cd app/frontend
 npm install
 npm run build
 ```

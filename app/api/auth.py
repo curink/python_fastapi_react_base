@@ -6,6 +6,8 @@ from fastapi.security import OAuth2PasswordRequestForm
 from app.crud.user import get_user_by_username_or_email, get_user_by_id
 from app.core.security import verify_password, create_access_token, create_refresh_token, verify_refresh_token
 from app.core.database import SessionLocal
+from app.models.user import User
+from app.auth import get_current_user
 
 router = APIRouter(tags=["Api Auth"])
 
@@ -57,3 +59,12 @@ def refresh_token(request: Request, db: Session = Depends(get_db)):
 
     access_token = create_access_token(data={"sub": str(user.id)})
     return {"access_token": access_token}
+
+@router.get("/me")
+def get_me(current_user: User = Depends(get_current_user)):
+    return {
+        "id": current_user.id,
+        "username": current_user.username,
+        "email": current_user.email,
+        "role": current_user.role
+    }
