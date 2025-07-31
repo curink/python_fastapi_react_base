@@ -1,6 +1,6 @@
 # python fastapi react base
 
-cara install
+## cara install
 package yg perlu di install
 ```bash
 pkg install python rust nodejs git
