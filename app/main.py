@@ -4,9 +4,10 @@ import os
 
 from fastapi import FastAPI, Request
 from fastapi.middleware.cors import CORSMiddleware
-from fastapi.responses import FileResponse, JSONResponse
+from fastapi.responses import FileResponse, JSONResponse, HTMLResponse
 from fastapi.staticfiles import StaticFiles
 from starlette.exceptions import HTTPException as StarletteHTTPException
+from jinja2 import Environment, FileSystemLoader
 
 from app.api import router as api_router
 from app.core.config import settings
@@ -39,6 +40,7 @@ async def static_404():
 
 
 # ✅ Fallback ke index.html hanya jika bukan API/assets/favicon
+templates = Environment(loader=FileSystemLoader("app/frontend/dist"))
 @app.exception_handler(StarletteHTTPException)
 async def spa_fallback_handler(request: Request, exc: StarletteHTTPException):
     if (
@@ -47,7 +49,12 @@ async def spa_fallback_handler(request: Request, exc: StarletteHTTPException):
         and not request.url.path.startswith("/assets")
         and not request.url.path.startswith("/favicon.ico")
     ):
-        index_path = os.path.join("app", "frontend", "dist", "index.html")
-        return FileResponse(index_path, media_type="text/html")
+        # index_path = os.path.join("app", "frontend", "dist", "index.html")
+        # return FileResponse(index_path, media_type="text/html")
+        template = templates.get_template("index.html")
+        rendered = template.render({
+            "app_name": settings.APP_NAME,
+        })
+        return HTMLResponse(content=rendered)
 
     return JSONResponse(status_code=exc.status_code, content={"detail": exc.detail})

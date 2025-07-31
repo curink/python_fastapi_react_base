@@ -2,15 +2,15 @@
 
 cara install
 ```bash
-cd python_fastapi_react_base
-pip install -r  requirements.txt
-python seed_admin.py
-uvicorn app.main:app --reload
+bash install.sh
 ```
 
-install frontend
-```base
-cd app/frontend
-npm install
-npm run build
+aktifkan environment
+```bash
+source venv/bin/activate
+```
+
+lalu jalankan server
+```bash
+uvicorn app.main:app --reload
 ```

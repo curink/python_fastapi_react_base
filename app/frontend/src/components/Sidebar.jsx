@@ -8,7 +8,6 @@ import {
 } from "lucide-react"
 import { Link, useLocation } from "react-router-dom"
 import { useAuth } from "../contexts/AuthContext"
-import { useAppConfig } from "../contexts/AppConfigContext"
 import Spinner from "./Sidebar"
 
 // Komponen menu item untuk modularitas
@@ -31,7 +30,7 @@ function SidebarMenuItem({ to, icon, label, active, onClick }) {
 export default function Sidebar({ open, setOpen }) {
   const { logout, user, loading } = useAuth()
   const { pathname } = useLocation()
-  const { app_name } = useAppConfig()
+  const app_name = window.APP_CONFIG?.app_name || "My App";
   
   if (loading) return <div>Loading...</div> //<Spinner />
   if (!user) return null
@@ -71,7 +70,7 @@ export default function Sidebar({ open, setOpen }) {
       >
         {/* Header (mobile only) */}
         <div className="flex items-center justify-between p-4 md:hidden">
-          <h2 className="text-lg font-bold">ShapexRx</h2>
+          <h2 className="text-lg font-bold">{app_name || "..."}</h2>
           <button onClick={() => setOpen(false)}>
             <X />
           </button>

@@ -1,6 +1,10 @@
-from app.core.database import SessionLocal
+from app.core.database import SessionLocal, engine
 from app.core.security import hash_password
 from app.models.user import User
+from app.core.database import Base
+
+# ✅ Membuat semua tabel jika belum ada
+Base.metadata.create_all(bind=engine)
 
 
 def create_admin_user():

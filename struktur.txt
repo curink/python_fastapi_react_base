@@ -36,7 +36,7 @@ python_fastapi_react_base/
 │   │   │   │   └── Users.jsx
 │   │   │   └── index.css
 │   │   ├── App.jsx
-│   │   ├── index.htmn
+│   │   ├── index.html
 │   │   ├── main.jsx
 │   │   ├── package.json
 │   │   ├── postcss.config.js
@@ -52,7 +52,9 @@ python_fastapi_react_base/
 │   ├── __init__.py
 │   ├── auth.py
 │   └── main.py
+├── scripts/
+│   └── seed_admin.py
 ├── .env.example
-├── requirements.txt
-├── seed_admin.py
-└── README.md
+├── install.sh
+├── README.md
+└── requirements.txt
