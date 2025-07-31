@@ -25,3 +25,8 @@ lalu jalankan server
 ```bash
 uvicorn app.main:app --reload
 ```
+
+### waktu dibuat
+- Python 3.12.11
+- Rustc 1.88.0
+- Nodejs 24.4.1
