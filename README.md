@@ -3,6 +3,7 @@
 ## cara install
 package yg perlu di install
 ```bash
+pkg update && pkg upgrade
 pkg install python rust nodejs git
 ```
 clone
