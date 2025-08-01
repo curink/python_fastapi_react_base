@@ -15,7 +15,12 @@ from app.core.database import Base, engine
 
 Base.metadata.create_all(bind=engine)
 
-app = FastAPI(title=settings.APP_NAME, docs_url=None, redoc_url=None, openapi_url=None)
+app = FastAPI(
+    title=settings.APP_NAME,
+    #docs_url=None,
+    redoc_url=None,
+    #openapi_url=None
+    )
 
 app.add_middleware(
     CORSMiddleware,
