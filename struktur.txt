@@ -15,32 +15,35 @@ python_fastapi_react_base/
 │   ├── frontend/
 │   │   ├── src/
 │   │   │   ├── api
-│   │   │   │   └── axios.js
+│   │   │   │   └── axios.ts
 │   │   │   ├── components
-│   │   │   │   ├── Card.jsx
-│   │   │   │   ├── ErrorBoundary.jsx
-│   │   │   │   ├── Header.jsx
-│   │   │   │   ├── ProtectedRoute.jsx
-│   │   │   │   ├── Sidebar.jsx
-│   │   │   │   ├── Spinner.jsx
-│   │   │   │   └── UserForm.jsx
+│   │   │   │   ├── Card.tsx
+│   │   │   │   ├── ErrorBoundary.tsx
+│   │   │   │   ├── GuestRoute.tsx
+│   │   │   │   ├── Header.tsx
+│   │   │   │   ├── LoadingButton.tsx
+│   │   │   │   ├── ProtectedRoute.tsx
+│   │   │   │   ├── Sidebar.tsx
+│   │   │   │   ├── Spinner.tsx
+│   │   │   │   └── UserForm.tsx
 │   │   │   ├── contexts
-│   │   │   │   └── AuthContext.jsx
+│   │   │   │   └── AuthContext.tsx
 │   │   │   ├── layouts
-│   │   │   │   ├── AuthLayout.jsx
-│   │   │   │   └── MainLayout.jsx
+│   │   │   │   ├── AuthLayout.tsx
+│   │   │   │   └── MainLayout.tsx
 │   │   │   ├── pages
-│   │   │   │   ├── Dashboard.jsx
-│   │   │   │   ├── Login.jsx
-│   │   │   │   ├── NotFound.jsx
-│   │   │   │   └── Users.jsx
+│   │   │   │   ├── Dashboard.tsx
+│   │   │   │   ├── Login.tsx
+│   │   │   │   ├── NotFound.tsx
+│   │   │   │   └── Users.tsx
 │   │   │   └── index.css
-│   │   ├── App.jsx
+│   │   ├── App.tsx
 │   │   ├── index.html
-│   │   ├── main.jsx
+│   │   ├── main.tsx
 │   │   ├── package.json
 │   │   ├── postcss.config.js
 │   │   ├── tailwind.config.js
+│   │   ├── tsconfig.json
 │   │   └── vite.config.js
 │   ├── models/
 │   │   ├── __init__.py
@@ -55,6 +58,8 @@ python_fastapi_react_base/
 ├── scripts/
 │   └── seed_admin.py
 ├── .env.example
+├── .gitignore
 ├── install.sh
 ├── README.md
-└── requirements.txt
+├── requirements.txt
+└── struktur.txt
