@@ -5,9 +5,10 @@ import { useEffect, useState } from "react"
 
 type HeaderProps = {
   setSidebarOpen: (open: boolean) => void
+  pageTitle?: string
 }
 
-export default function Header({ setSidebarOpen }: HeaderProps) {
+export default function Header({ setSidebarOpen, pageTitle }: HeaderProps) {
   const [isDark, setIsDark] = useState(() => {
     const storedTheme = localStorage.getItem("theme")
     return storedTheme === "dark"
@@ -30,7 +31,9 @@ export default function Header({ setSidebarOpen }: HeaderProps) {
         <button onClick={() => setSidebarOpen(true)} className="md:hidden">
           <Menu />
         </button>
-        <h1 className="text-lg font-bold">Dashboard</h1>
+        <h1 className="text-lg font-bold">
+          {pageTitle || (window as any).APP_CONFIG?.app_name || "Dashboard"}
+        </h1>
       </div>
 
       <button

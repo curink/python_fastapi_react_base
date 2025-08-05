@@ -1,9 +1,11 @@
 // /src/pages/Dashboard.tsx
 
 import Card from "../components/Card"
+import PageWrapper from "../components/PageWrapper"
 
 export default function Dashboard() {
   return (
+    <PageWrapper title="Dashboard">
     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
       <Card title="My Credit Card">
         <div className="text-blue-600 font-mono text-sm">**** 4242</div>
@@ -31,5 +33,6 @@ export default function Dashboard() {
         <p className="text-xl font-bold">20,541,125</p>
       </Card>
     </div>
+    </PageWrapper>
   )
 }

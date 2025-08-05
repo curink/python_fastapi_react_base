@@ -1,4 +1,4 @@
-// App.tsx
+// /App.tsx
 
 import { Routes, Route } from "react-router-dom"
 import Dashboard from "./src/pages/Dashboard"
