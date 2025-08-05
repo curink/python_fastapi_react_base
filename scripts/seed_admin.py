@@ -1,25 +1,29 @@
-from app.core.database import SessionLocal, engine
+# /scripts/seed_admin.py
+
+import asyncio
+
+from sqlalchemy.future import select
+
 from app.core.security import hash_password
 from app.models.user import User
-from app.core.database import Base
-
-# ✅ Membuat semua tabel jika belum ada
-Base.metadata.create_all(bind=engine)
+from app.core.database import Base, engine, AsyncSessionLocal
 
 
-def create_admin_user():
-    db = SessionLocal()
-    try:
+async def create_admin_user():
+    async with AsyncSessionLocal() as db:
+        # Buat semua tabel
+        async with engine.begin() as conn:
+            await conn.run_sync(Base.metadata.create_all)
+
         username = "admin"
         email = "admin@example.com"
         password = "admin123"
         role = "admin"
 
-        existing = (
-            db.query(User)
-            .filter((User.username == username) | (User.email == email))
-            .first()
+        result = await db.execute(
+            select(User).where((User.username == username) | (User.email == email))
         )
+        existing = result.scalar_one_or_none()
 
         if existing:
             print("ℹ️ Admin user already exists.")
@@ -32,11 +36,9 @@ def create_admin_user():
             role=role,
         )
         db.add(admin_user)
-        db.commit()
+        await db.commit()
         print("✅ Admin user created successfully.")
-    finally:
-        db.close()
 
 
 if __name__ == "__main__":
-    create_admin_user()
+    asyncio.run(create_admin_user())

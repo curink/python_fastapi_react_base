@@ -1,11 +1,12 @@
-// src/layouts/MainLayout.jsx
+// /src/layouts/MainLayout.tsx
+
+import { useState } from "react"
+import { Outlet } from "react-router-dom"
 import Header from "../components/Header"
 import Sidebar from "../components/Sidebar"
-import { Outlet } from "react-router-dom"
-import { useState } from "react"
 
-export default function MainLayout() {
-  const [sidebarOpen, setSidebarOpen] = useState(false)
+export default function MainLayout(): JSX.Element {
+  const [sidebarOpen, setSidebarOpen] = useState<boolean>(false)
 
   return (
     <div className="flex h-screen bg-gray-100 dark:bg-gray-900 text-gray-900 dark:text-white">

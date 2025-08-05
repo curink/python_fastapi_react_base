@@ -1,9 +1,14 @@
+// /src/components/Header.tsx
+
 import { Menu, Moon, Sun } from "lucide-react"
 import { useEffect, useState } from "react"
 
-export default function Header({ setSidebarOpen }) {
+type HeaderProps = {
+  setSidebarOpen: (open: boolean) => void
+}
+
+export default function Header({ setSidebarOpen }: HeaderProps) {
   const [isDark, setIsDark] = useState(() => {
-    // Cek localStorage saat komponen pertama kali render
     const storedTheme = localStorage.getItem("theme")
     return storedTheme === "dark"
   })
@@ -22,7 +27,6 @@ export default function Header({ setSidebarOpen }) {
   return (
     <header className="flex items-center justify-between bg-white dark:bg-gray-800 px-4 py-2 shadow-md">
       <div className="flex items-center gap-2">
-        {/* Hamburger hanya muncul di mobile */}
         <button onClick={() => setSidebarOpen(true)} className="md:hidden">
           <Menu />
         </button>

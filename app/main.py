@@ -1,7 +1,7 @@
 # /app/main.py
 
 import os
-
+import asyncio
 from fastapi import FastAPI, Request
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import FileResponse, JSONResponse, HTMLResponse
@@ -13,7 +13,9 @@ from app.api import router as api_router
 from app.core.config import settings
 from app.core.database import Base, engine
 
-Base.metadata.create_all(bind=engine)
+async def init_db():
+    async with engine.begin() as conn:
+        await conn.run_sync(Base.metadata.create_all)
 
 app = FastAPI(
     title=settings.APP_NAME,
@@ -22,9 +24,15 @@ app = FastAPI(
     #openapi_url=None
     )
 
+@app.on_event("startup")
+async def on_startup():
+    print("[INFO] Initializing database...")
+    await init_db()
+    print("[INFO] Startup complete.")
+
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["http://localhost:5173", "http://localhost:8001"],
+    allow_origins=["http://localhost:5173"],
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],

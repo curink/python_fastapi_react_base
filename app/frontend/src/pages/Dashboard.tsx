@@ -1,3 +1,5 @@
+// /src/pages/Dashboard.tsx
+
 import Card from "../components/Card"
 
 export default function Dashboard() {

@@ -1,13 +1,21 @@
-import { useEffect, useState } from "react"
+// /src/pages/Login.tssx
+
+import { useEffect, useState, ChangeEvent, FormEvent } from "react"
 import api from "../api/axios"
 import { useAuth } from "../contexts/AuthContext"
+import LoadingButton from "../components/LoadingButton"
+
+type FormData = {
+  username: string
+  password: string
+}
 
 export default function Login() {
-  const [formData, setFormData] = useState({ username: "", password: "" })
-  const [error, setError] = useState(null)
+  const [formData, setFormData] = useState<FormData>({ username: "", password: "" })
+  const [error, setError] = useState<string | null>(null)
+  const [loading, setLoading] = useState(false)
   const { login } = useAuth()
 
-  // ⬇️ Tambahkan: cek tema saat mount
   useEffect(() => {
     const root = window.document.documentElement
     const theme = localStorage.getItem("theme")
@@ -18,13 +26,14 @@ export default function Login() {
     }
   }, [])
 
-  const handleChange = (e) => {
+  const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     setFormData({ ...formData, [e.target.name]: e.target.value })
   }
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = async (e: FormEvent) => {
     e.preventDefault()
     setError(null)
+    setLoading(true)
 
     try {
       const response = await api.post(
@@ -32,21 +41,27 @@ export default function Login() {
         new URLSearchParams(formData),
         { headers: { "Content-Type": "application/x-www-form-urlencoded" } }
       )
-      login(response.data.access_token)
-    } catch (err) {
+      await login(response.data.access_token)
+    } catch (err: any) {
       if (err.response?.status === 403) {
         setError("Akses ditolak: hanya admin yang boleh login.")
       } else {
         setError(err.response?.data?.detail || "Login gagal")
       }
+    } finally {
+      setLoading(false)
     }
   }
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-gray-100 dark:bg-gray-900 px-4">
       <div className="w-full max-w-md bg-white dark:bg-gray-800 p-8 rounded-lg shadow-lg">
-        <h2 className="text-2xl font-bold mb-6 text-center text-gray-900 dark:text-white">Login</h2>
-        {error && <p className="text-red-500 mb-4 text-sm text-center">{error}</p>}
+        <h2 className="text-2xl font-bold mb-6 text-center text-gray-900 dark:text-white">
+          Login
+        </h2>
+        {error && (
+          <p className="text-red-500 mb-4 text-sm text-center">{error}</p>
+        )}
         <form onSubmit={handleSubmit} className="space-y-4">
           <div>
             <label className="block text-sm font-medium mb-1 text-gray-700 dark:text-gray-300">
@@ -74,12 +89,15 @@ export default function Login() {
               required
             />
           </div>
-          <button
-            type="submit"
-            className="w-full bg-blue-600 hover:bg-blue-700 text-white py-2 rounded"
-          >
-            Login
-          </button>
+
+          <LoadingButton
+  type="submit"
+  loading={loading}
+  variant="primary"
+  size="md"
+>
+  Login
+</LoadingButton>
         </form>
       </div>
     </div>

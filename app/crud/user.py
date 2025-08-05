@@ -2,29 +2,34 @@
 
 from typing import List, Optional
 
+from sqlalchemy import select, update as sql_update, delete as sql_delete
 from sqlalchemy.exc import IntegrityError
-from sqlalchemy.orm import Session
+from sqlalchemy.ext.asyncio import AsyncSession
 
 from app.core.security import hash_password
 from app.models.user import User
 from app.schemas.user import UserCreate, UserUpdate
 
 
-def get_user_by_id(db: Session, user_id: int) -> Optional[User]:
-    return db.query(User).filter(User.id == user_id).first()
+async def get_user_by_id(db: AsyncSession, user_id: int) -> Optional[User]:
+    stmt = select(User).where(User.id == user_id)
+    result = await db.execute(stmt)
+    return result.scalar_one_or_none()
 
 
-def get_user_by_username_or_email(db: Session, value: str) -> Optional[User]:
-    return (
-        db.query(User).filter((User.username == value) | (User.email == value)).first()
-    )
+async def get_user_by_username_or_email(db: AsyncSession, value: str) -> Optional[User]:
+    stmt = select(User).where((User.username == value) | (User.email == value))
+    result = await db.execute(stmt)
+    return result.scalar_one_or_none()
 
 
-def get_all_users(db: Session) -> List[User]:
-    return db.query(User).all()
+async def get_all_users(db: AsyncSession) -> List[User]:
+    stmt = select(User)
+    result = await db.execute(stmt)
+    return result.scalars().all()
 
 
-def create_user(db: Session, user_data: UserCreate) -> User:
+async def create_user(db: AsyncSession, user_data: UserCreate) -> User:
     hashed_pw = hash_password(user_data.password)
     db_user = User(
         username=user_data.username,
@@ -34,16 +39,16 @@ def create_user(db: Session, user_data: UserCreate) -> User:
     )
     try:
         db.add(db_user)
-        db.commit()
-        db.refresh(db_user)
+        await db.commit()
+        await db.refresh(db_user)
         return db_user
     except IntegrityError:
-        db.rollback()
+        await db.rollback()
         raise
 
 
-def update_user(db: Session, user_id: int, user_update: UserUpdate) -> Optional[User]:
-    user = get_user_by_id(db, user_id)
+async def update_user(db: AsyncSession, user_id: int, user_update: UserUpdate) -> Optional[User]:
+    user = await get_user_by_id(db, user_id)
     if not user:
         return None
 
@@ -54,14 +59,14 @@ def update_user(db: Session, user_id: int, user_update: UserUpdate) -> Optional[
         elif hasattr(user, key):
             setattr(user, key, value)
 
-    db.commit()
-    db.refresh(user)
+    await db.commit()
+    await db.refresh(user)
     return user
 
 
-def delete_user(db: Session, user_id: int) -> Optional[User]:
-    user = get_user_by_id(db, user_id)
+async def delete_user(db: AsyncSession, user_id: int) -> Optional[User]:
+    user = await get_user_by_id(db, user_id)
     if user:
-        db.delete(user)
-        db.commit()
+        await db.delete(user)
+        await db.commit()
     return user

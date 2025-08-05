@@ -1,32 +1,57 @@
-import { useState } from "react"
-import api from "../api/axios"
+// /src/components/UserForm.tsx
 
-export default function UserForm({ user, onClose, onSave }) {
+import { useState, FormEvent, useEffect } from "react"
+import api from "../api/axios"
+import LoadingButton from "../components/LoadingButton"
+
+type UserType = {
+  id?: number
+  username: string
+  email: string
+  role: string
+}
+
+type UserFormProps = {
+  user?: UserType
+  onClose: () => void
+  onSave: (data: any) => void
+}
+
+export default function UserForm({ user, onClose, onSave }: UserFormProps) {
+  const [loading, setLoading] = useState(false)
+  const [show, setShow] = useState(false) // animasi masuk/keluar
   const [form, setForm] = useState({
     username: user?.username || "",
     email: user?.email || "",
     role: user?.role || "user",
-    password: "", // hanya untuk user baru
+    password: "",
   })
 
-  const handleSubmit = async (e) => {
+  useEffect(() => {
+    const t = setTimeout(() => setShow(true), 10) // animasi masuk
+    return () => clearTimeout(t)
+  }, [])
+
+  const closeWithAnimation = () => {
+    setShow(false)
+    setTimeout(onClose, 500) // delay sesuai animasi
+  }
+
+  const handleSubmit = async (e: FormEvent) => {
     e.preventDefault()
+    setLoading(true)
 
     try {
       const url = user ? `/users/${user.id}` : "/users"
-
-      // Siapkan payload dengan filter password hanya jika dibutuhkan
-      const payload = {
+      const payload: Record<string, string> = {
         username: form.username,
         email: form.email,
         role: form.role,
       }
 
       if (!user) {
-        // untuk user baru, wajib password (atau default)
         payload.password = form.password || "default123"
       } else if (form.password) {
-        // untuk update, hanya kirim password jika diisi
         payload.password = form.password
       }
 
@@ -34,23 +59,31 @@ export default function UserForm({ user, onClose, onSave }) {
         ? await api.put(url, payload)
         : await api.post(url, payload)
 
-      onSave(response.data)
-    } catch (err) {
+      onSave(response.data) // kirim ke parent
+      closeWithAnimation()
+    } catch (err: any) {
       const errorMsg =
         err.response?.data?.detail?.[0]?.msg ||
         err.response?.data?.detail ||
         err.message
-
       alert("Gagal menyimpan user: " + errorMsg)
       console.error("UserForm error:", err)
+    } finally {
+      setLoading(false)
     }
   }
 
   return (
-    <div className="fixed inset-0 bg-black bg-opacity-30 flex items-center justify-center z-50">
+    <div
+      className={`fixed inset-0 bg-black bg-opacity-30 flex items-center justify-center z-50 transition-opacity duration-500 ${
+        show ? "opacity-100" : "opacity-0"
+      }`}
+    >
       <form
         onSubmit={handleSubmit}
-        className="bg-white dark:bg-gray-800 p-6 rounded shadow-md space-y-4 w-[90%] max-w-md"
+        className={`bg-white dark:bg-gray-800 p-6 rounded shadow-md space-y-4 w-[90%] max-w-md transform transition-all duration-500 ${
+          show ? "scale-100 opacity-100" : "scale-90 opacity-0"
+        }`}
       >
         <h2 className="text-xl font-bold">{user ? "Edit User" : "Add User"}</h2>
 
@@ -78,7 +111,7 @@ export default function UserForm({ user, onClose, onSave }) {
           className="w-full p-2 rounded border dark:bg-gray-700"
           value={form.password}
           onChange={(e) => setForm({ ...form, password: e.target.value })}
-          required={!user} // wajib hanya saat create
+          required={!user}
         />
 
         <select
@@ -94,13 +127,13 @@ export default function UserForm({ user, onClose, onSave }) {
           <button
             type="button"
             className="bg-gray-400 px-4 py-2 rounded"
-            onClick={onClose}
+            onClick={closeWithAnimation}
           >
             Cancel
           </button>
-          <button type="submit" className="bg-blue-600 text-white px-4 py-2 rounded">
+          <LoadingButton type="submit" loading={loading} variant="primary" size="md">
             {user ? "Update" : "Create"}
-          </button>
+          </LoadingButton>
         </div>
       </form>
     </div>
