@@ -7,7 +7,7 @@ package yg perlu di install
 pkg update && pkg upgrade
 pkg install python rust nodejs git
 ```
-- acode terminal (alpin)
+- acode terminal (Alpine linux)
 ```bash
 apk update && apk upgrade
 apk add python3 py3-pip rust nodejs npm git
