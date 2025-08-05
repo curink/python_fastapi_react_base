@@ -14,7 +14,7 @@ db.sqlite3
 *.db
 *.log
 .ruff_cache/
-packkage-lock.json
+package-lock.json
 
 # Environment
 .env
