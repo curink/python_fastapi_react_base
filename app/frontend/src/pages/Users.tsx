@@ -63,81 +63,81 @@ export default function Users() {
 
   return (
     <PageWrapper title="Users Management">
-    <div>
-      <button
-        className="bg-blue-600 text-white px-4 py-2 rounded mb-4"
-        onClick={() => {
-          setEditingUser(null)
-          setShowForm(true)
-        }}
-      >
-        + Add User
-      </button>
-
-      <table className="w-full table-auto border border-collapse border-gray-300">
-        <thead className="bg-gray-100 dark:bg-gray-700">
-          <tr>
-            <th className="p-2 border">Username</th>
-            <th className="p-2 border">Email</th>
-            <th className="p-2 border">Role</th>
-            <th className="p-2 border">Actions</th>
-          </tr>
-        </thead>
-        <tbody>
-          {loading ? (
+      <div>
+        <button
+          className="bg-blue-600 text-white px-4 py-2 rounded mb-4"
+          onClick={() => {
+            setEditingUser(null)
+            setShowForm(true)
+          }}
+        >
+          + Add User
+        </button>
+  
+        <table className="w-full table-auto border border-collapse border-gray-300">
+          <thead className="bg-gray-100 dark:bg-gray-700">
             <tr>
-              <td colSpan={4} className="text-center py-6">
-                <Spinner full={false} />
-              </td>
+              <th className="p-2 border">Username</th>
+              <th className="p-2 border">Email</th>
+              <th className="p-2 border">Role</th>
+              <th className="p-2 border">Actions</th>
             </tr>
-          ) : users.length === 0 ? (
-            <tr>
-              <td colSpan={4} className="text-center py-6 text-gray-500">
-                Tidak ada data pengguna.
-              </td>
-            </tr>
-          ) : (
-            users.map((u) => (
-              <tr key={u.id} className="border-t dark:border-gray-600">
-                <td className="p-2 border">{u.username}</td>
-                <td className="p-2 border">{u.email}</td>
-                <td className="p-2 border">
-                  {u.role.charAt(0).toUpperCase() + u.role.slice(1)}
-                </td>
-                <td className="p-2 border space-x-2">
-                  <button
-                    className="bg-yellow-400 px-3 py-1 rounded"
-                    onClick={() => {
-                      setEditingUser(u)
-                      setShowForm(true)
-                    }}
-                  >
-                    <UserPen />
-                  </button>
-                  <button
-                    className="bg-red-600 text-white px-3 py-1 rounded"
-                    onClick={() => handleDelete(u.id)}
-                  >
-                    <UserRoundX />
-                  </button>
+          </thead>
+          <tbody>
+            {loading ? (
+              <tr>
+                <td colSpan={4} className="text-center py-6">
+                  <Spinner full={false} />
                 </td>
               </tr>
-            ))
-          )}
-        </tbody>
-      </table>
-
-      {showForm && (
-        <UserForm
-          user={editingUser || undefined}
-          onClose={() => {
-            setShowForm(false)
-            setEditingUser(null)
-          }}
-          onSave={handleSave}
-        />
-      )}
-    </div>
+            ) : users.length === 0 ? (
+              <tr>
+                <td colSpan={4} className="text-center py-6 text-gray-500">
+                  Tidak ada data pengguna.
+                </td>
+              </tr>
+            ) : (
+              users.map((u) => (
+                <tr key={u.id} className="border-t dark:border-gray-600">
+                  <td className="p-2 border">{u.username}</td>
+                  <td className="p-2 border">{u.email}</td>
+                  <td className="p-2 border">
+                    {u.role.charAt(0).toUpperCase() + u.role.slice(1)}
+                  </td>
+                  <td className="p-2 border space-x-2">
+                    <button
+                      className="bg-yellow-400 px-3 py-1 rounded"
+                      onClick={() => {
+                        setEditingUser(u)
+                        setShowForm(true)
+                      }}
+                    >
+                      <UserPen />
+                    </button>
+                    <button
+                      className="bg-red-600 text-white px-3 py-1 rounded"
+                      onClick={() => handleDelete(u.id)}
+                    >
+                      <UserRoundX />
+                    </button>
+                  </td>
+                </tr>
+              ))
+            )}
+          </tbody>
+        </table>
+  
+        {showForm && (
+          <UserForm
+            user={editingUser || undefined}
+            onClose={() => {
+              setShowForm(false)
+              setEditingUser(null)
+            }}
+            onSave={handleSave}
+          />
+        )}
+      </div>
     </PageWrapper>
   )
 }

@@ -56,53 +56,53 @@ export default function Login() {
 
   return (
     <PageWrapper title="Login">
-    <div className="min-h-screen flex items-center justify-center bg-gray-100 dark:bg-gray-900 px-4">
-      <div className="w-full max-w-md bg-white dark:bg-gray-800 p-8 rounded-lg shadow-lg">
-        <h2 className="text-2xl font-bold mb-6 text-center text-gray-900 dark:text-white">
-          Login
-        </h2>
-        {error && (
-          <p className="text-red-500 mb-4 text-sm text-center">{error}</p>
-        )}
-        <form onSubmit={handleSubmit} className="space-y-4">
-          <div>
-            <label className="block text-sm font-medium mb-1 text-gray-700 dark:text-gray-300">
-              Username / Email
-            </label>
-            <input
-              type="text"
-              name="username"
-              value={formData.username}
-              onChange={handleChange}
-              className="w-full px-3 py-2 rounded border dark:border-gray-600 dark:bg-gray-700 dark:text-white"
-              required
-            />
-          </div>
-          <div>
-            <label className="block text-sm font-medium mb-1 text-gray-700 dark:text-gray-300">
-              Password
-            </label>
-            <input
-              type="password"
-              name="password"
-              value={formData.password}
-              onChange={handleChange}
-              className="w-full px-3 py-2 rounded border dark:border-gray-600 dark:bg-gray-700 dark:text-white"
-              required
-            />
-          </div>
-
-          <LoadingButton
-  type="submit"
-  loading={loading}
-  variant="primary"
-  size="md"
->
-  Login
-</LoadingButton>
-        </form>
+      <div className="min-h-screen flex items-center justify-center bg-gray-100 dark:bg-gray-900 px-4">
+        <div className="w-full max-w-md bg-white dark:bg-gray-800 p-8 rounded-lg shadow-lg">
+          <h2 className="text-2xl font-bold mb-6 text-center text-gray-900 dark:text-white">
+            Login
+          </h2>
+          {error && (
+            <p className="text-red-500 mb-4 text-sm text-center">{error}</p>
+          )}
+          <form onSubmit={handleSubmit} className="space-y-4">
+            <div>
+              <label className="block text-sm font-medium mb-1 text-gray-700 dark:text-gray-300">
+                Username / Email
+              </label>
+              <input
+                type="text"
+                name="username"
+                value={formData.username}
+                onChange={handleChange}
+                className="w-full px-3 py-2 rounded border dark:border-gray-600 dark:bg-gray-700 dark:text-white"
+                required
+              />
+            </div>
+            <div>
+              <label className="block text-sm font-medium mb-1 text-gray-700 dark:text-gray-300">
+                Password
+              </label>
+              <input
+                type="password"
+                name="password"
+                value={formData.password}
+                onChange={handleChange}
+                className="w-full px-3 py-2 rounded border dark:border-gray-600 dark:bg-gray-700 dark:text-white"
+                required
+              />
+            </div>
+  
+            <LoadingButton
+              type="submit"
+              loading={loading}
+              variant="primary"
+              size="md"
+            >
+              Login
+            </LoadingButton>
+          </form>
+        </div>
       </div>
-    </div>
     </PageWrapper>
   )
 }
