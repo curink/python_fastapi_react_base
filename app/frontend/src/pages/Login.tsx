@@ -1,10 +1,10 @@
 // /src/pages/Login.tssx
 
 import { useEffect, useState, ChangeEvent, FormEvent } from "react"
-import api from "../api/axios"
-import { useAuth } from "../contexts/AuthContext"
-import LoadingButton from "../components/LoadingButton"
-import PageWrapper from "../components/PageWrapper"
+import api from "@/api/axios"
+import { useAuth } from "@/contexts/AuthContext"
+import LoadingButton from "@/components/LoadingButton"
+import PageWrapper from "@/components/PageWrapper"
 
 type FormData = {
   username: string

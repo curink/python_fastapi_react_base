@@ -3,10 +3,10 @@
 import React from "react"
 import ReactDOM from "react-dom/client"
 import { BrowserRouter } from "react-router-dom"
-import { AuthProvider } from "./src/contexts/AuthContext"
-import ErrorBoundary from "./src/components/ErrorBoundary"
+import { AuthProvider } from "@/contexts/AuthContext"
+import ErrorBoundary from "@/components/ErrorBoundary"
 import App from "./App"
-import "./src/index.css"
+import "@/index.css"
 
 const rootElement = document.getElementById("root")
 

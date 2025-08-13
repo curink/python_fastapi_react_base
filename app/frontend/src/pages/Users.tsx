@@ -1,10 +1,10 @@
 // /src/pages/Users.tsx
 
 import { useEffect, useState } from "react"
-import api from "../api/axios"
-import UserForm from "../components/UserForm"
-import Spinner from "../components/Spinner"
-import PageWrapper from "../components/PageWrapper"
+import api from "@/api/axios"
+import UserForm from "@/components/UserForm"
+import Spinner from "@/components/Spinner"
+import PageWrapper from "@/components/PageWrapper"
 import { UserPen, UserRoundX } from "lucide-react"
 
 type User = {

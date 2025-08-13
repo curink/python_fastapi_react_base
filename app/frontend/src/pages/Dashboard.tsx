@@ -1,7 +1,7 @@
 // /src/pages/Dashboard.tsx
 
-import Card from "../components/Card"
-import PageWrapper from "../components/PageWrapper"
+import Card from "@/components/Card"
+import PageWrapper from "@/components/PageWrapper"
 
 export default function Dashboard() {
   return (

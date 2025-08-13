@@ -1,14 +1,14 @@
 // /App.tsx
 
 import { Routes, Route } from "react-router-dom"
-import Dashboard from "./src/pages/Dashboard"
-import Users from "./src/pages/Users"
-import Login from "./src/pages/Login"
-import NotFound from "./src/pages/NotFound"
-import MainLayout from "./src/layouts/MainLayout"
-import AuthLayout from "./src/layouts/AuthLayout"
-import ProtectedRoute from "./src/components/ProtectedRoute"
-import GuestRoute from "./src/components/GuestRoute"
+import Dashboard from "@/pages/Dashboard"
+import Users from "@/pages/Users"
+import Login from "@/pages/Login"
+import NotFound from "@/pages/NotFound"
+import MainLayout from "@/layouts/MainLayout"
+import AuthLayout from "@/layouts/AuthLayout"
+import ProtectedRoute from "@/components/ProtectedRoute"
+import GuestRoute from "@/components/GuestRoute"
 
 export default function App(): JSX.Element {
   return (

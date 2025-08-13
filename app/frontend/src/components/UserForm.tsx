@@ -1,8 +1,8 @@
 // /src/components/UserForm.tsx
 
 import { useState, FormEvent, useEffect } from "react"
-import api from "../api/axios"
-import LoadingButton from "../components/LoadingButton"
+import api from "@/api/axios"
+import LoadingButton from "@/components/LoadingButton"
 
 type UserType = {
   id?: number
